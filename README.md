@@ -196,8 +196,8 @@ Customized admin panels include:
 ## Clone Repository
 
 ```bash
-git clone <your-repository-url>
-cd <project-folder>
+git clone https://github.com/3ssam-ali-98/Multi-Tenant-Task-Manager
+cd Multi-Tenant\ Task\ Management/
 ```
 
 ---

@@ -114,7 +114,6 @@ export function SignupForm({
                     {error}
                   </p>
                 )}
-                <Button type="submit">Create Account</Button>
                 <Button type="submit" disabled={loading}>
                   {loading ? "Creating..." : "Create Account"}
                 </Button>

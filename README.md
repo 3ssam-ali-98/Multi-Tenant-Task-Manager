@@ -1,222 +1,254 @@
-# Multi-Tenant Task Management API
+# Multi-Tenant Task Management System
 
-A Django REST Framework backend API for multi-tenant organization and task management with JWT authentication, role-based permissions, organization isolation, and task workflows.
+A full-stack multi-tenant task management platform built with **Next.js**, **TypeScript**, **Django REST Framework**, and **PostgreSQL/SQLite**.  
+The application supports organization-based collaboration with role-aware permissions, task assignment, membership management, JWT authentication, and responsive dashboard interfaces.
 
-This project demonstrates:
+---
 
-* Multi-tenant backend architecture
-* Role-based access control (RBAC)
-* JWT authentication
-* Organization/member/task relationships
-* Field-level permissions
-* Custom serializer validation
-* Django admin customization
+# Live Demo
+
+> Frontend: Coming Soon  
+> Backend API: Coming Soon
+
+---
+
+# Screenshots
+
+## Dashboard
+
+![Dashboard](./screenshots/dashboard.png)
+
+## Organizations
+
+![Organizations](./screenshots/organizations.png)
+
+## Memberships
+
+![Memberships](./screenshots/memberships.png)
+
+## Tasks
+
+![Tasks](./screenshots/tasks.png)
 
 ---
 
 # Features
 
-## Authentication
+## Authentication & Authorization
 
-* User registration
-* JWT login authentication
-* Refresh token support
-* Custom user model using email authentication
+- JWT authentication
+- Login / Registration system
+- Persistent authentication state
+- Refresh token handling with Axios interceptors
+- Protected routes
+- Role-aware UI rendering
 
-## Organizations
+---
 
-* Create organizations
-* View organization details
-* Update organization information
-* Delete organizations
-* Organization ownership system
+## Multi-Tenant Organizations
 
-## Memberships
+- Create organizations
+- Update organizations
+- Delete organizations
+- Organization-specific data isolation
+- Nested organization routing
 
-* Add users to organizations
-* Assign roles (`admin` / `member`)
-* Prevent duplicate memberships
-* Prevent organization owner removal/demotion
+---
 
-## Tasks
+## Membership Management
 
-* Create organization tasks
-* Assign tasks to organization members
-* Task status workflow:
+- Add members to organizations
+- Assign organization roles
+- Owner / Admin / Member role hierarchy
+- Role-aware permissions
+- Prevent invalid owner actions
+- Responsive membership management UI
 
-  * `todo`
-  * `in_progress`
-  * `done`
-* Members can only update task status
-* Admins can fully manage tasks
+---
 
-## Permissions & Security
+## Task Management
 
-* Multi-tenant organization isolation
-* Role-based endpoint access
-* Field-level update restrictions
-* Organization membership validation
-* Cross-organization protection
+- Create tasks within organizations
+- Assign tasks to organization members
+- Edit and delete tasks
+- Task assignment dropdowns
+- Organization-scoped task management
+- Responsive task dashboard
 
-## Django Admin
+---
 
-Customized Django admin interface with:
+## Frontend Features
 
-* Search fields
-* Filters
-* Ordering
-* Read-only fields
-* Improved list displays
+- Responsive dashboard layout
+- Sidebar navigation
+- Dynamic breadcrumbs
+- Loading states
+- Empty states
+- Error handling
+- Toast notifications
+- Reusable dialogs and forms
+- Role-aware action buttons
+- Centralized API services
+- Reusable custom hooks
+- Type-safe frontend architecture using TypeScript
 
 ---
 
 # Tech Stack
 
-* Python
-* Django
-* Django REST Framework
-* SimpleJWT
-* SQLite
+## Frontend
+
+- Next.js (App Router)
+- TypeScript
+- React
+- Tailwind CSS
+- shadcn/ui
+- Axios
+- Lucide React
+
+---
+
+## Backend
+
+- Django
+- Django REST Framework
+- JWT Authentication
+- PostgreSQL / SQLite
+- Custom permission classes
+
+---
+
+# Architecture Highlights
+
+## Multi-Tenant Architecture
+
+Organizations isolate memberships and tasks, ensuring tenant-specific data access and authorization.
+
+---
+
+## Role-Based Access Control (RBAC)
+
+The application implements:
+
+- Owner permissions
+- Admin permissions
+- Member permissions
+
+UI actions dynamically adapt based on the authenticated user's role.
+
+---
+
+## Reusable Frontend Architecture
+
+The frontend follows a scalable architecture using:
+
+- Reusable hooks
+- Centralized API services
+- Shared utility functions
+- Reusable CRUD dialogs
+- Shared permission utilities
+
+---
+
+## Dynamic Dashboard Layout
+
+The application uses:
+
+- Shared dashboard layout
+- Sidebar navigation
+- Dynamic breadcrumbs
+- Nested routing structure
 
 ---
 
 # Project Structure
 
 ```plaintext
-accounts/
-organizations/
-tasks/
-screenshots/
-postman_collection.json
-manage.py
-README.md
+root/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+│
+├── backend/
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── apps/
+│   └── ...
+│
+├── screenshots/
+│
+└── README.md
 ```
 
 ---
 
-# API Endpoints
+# Environment Variables
 
-## Authentication
+## Frontend
 
-| Method | Endpoint              | Description       |
-| ------ | --------------------- | ----------------- |
-| POST   | `/api/register/`      | Register user     |
-| POST   | `/api/login/`         | Login user        |
-| POST   | `/api/token/refresh/` | Refresh JWT token |
+Create:
 
----
+```plaintext
+frontend/.env.local
+```
 
-## Organizations
+Example:
 
-| Method | Endpoint                       | Description             |
-| ------ | ------------------------------ | ----------------------- |
-| GET    | `/api/organizations/`          | List user organizations |
-| POST   | `/api/organizations/`          | Create organization     |
-| GET    | `/api/organizations/<org_id>/` | Get organization        |
-| PATCH  | `/api/organizations/<org_id>/` | Update organization     |
-| DELETE | `/api/organizations/<org_id>/` | Delete organization     |
+```env
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api
+```
 
 ---
 
-## Memberships
+## Backend
 
-| Method | Endpoint                                               | Description       |
-| ------ | ------------------------------------------------------ | ----------------- |
-| GET    | `/api/organizations/<org_id>/memberships/`             | List memberships  |
-| POST   | `/api/organizations/<org_id>/memberships/`             | Add membership    |
-| PATCH  | `/api/organizations/<org_id>/memberships/<member_id>/` | Update membership |
-| DELETE | `/api/organizations/<org_id>/memberships/<member_id>/` | Delete membership |
+Create:
 
----
+```plaintext
+backend/.env
+```
 
-## Tasks
+Example:
 
-| Method | Endpoint                                       | Description |
-| ------ | ---------------------------------------------- | ----------- |
-| GET    | `/api/organizations/<org_id>/tasks/`           | List tasks  |
-| POST   | `/api/organizations/<org_id>/tasks/`           | Create task |
-| GET    | `/api/organizations/<org_id>/tasks/<task_id>/` | Get task    |
-| PATCH  | `/api/organizations/<org_id>/tasks/<task_id>/` | Update task |
-| DELETE | `/api/organizations/<org_id>/tasks/<task_id>/` | Delete task |
+```env
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+```
 
 ---
 
-# Permission Rules
+# Installation & Setup
 
-## Organization Permissions
+# Backend Setup
 
-| Role   | Permissions                  |
-| ------ | ---------------------------- |
-| Owner  | Full organization control    |
-| Admin  | Manage memberships and tasks |
-| Member | Limited task access          |
-
----
-
-## Task Permissions
-
-### Admin
-
-* View all organization tasks
-* Create tasks
-* Edit all task fields
-* Delete tasks
-
-### Member
-
-* View only assigned tasks
-* Update task status only
-
----
-
-# Validation Rules
-
-* Assigned task users must belong to the same organization
-* Organization owners cannot be deleted
-* Organization owners cannot be demoted
-* Duplicate memberships are blocked
-* Unauthorized cross-organization access is blocked
-
----
-
-# Django Admin Features
-
-Customized admin panels include:
-
-* Search functionality
-* Filters
-* Ordering
-* Read-only timestamps
-* Improved relationship displays
-
----
-
-# Installation
-
-## Clone Repository
+## 1. Navigate to backend directory
 
 ```bash
-git clone https://github.com/3ssam-ali-98/Multi-Tenant-Task-Manager
-cd Multi-Tenant\ Task\ Management/
+cd backend
 ```
 
 ---
 
-## Create Virtual Environment
+## 2. Create virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate environment:
+---
+
+## 3. Activate virtual environment
 
 ### Windows
 
 ```bash
-venv\\Scripts\\activate
+venv\Scripts\activate
 ```
 
-### Linux / Mac
+### Linux / macOS
 
 ```bash
 source venv/bin/activate
@@ -224,7 +256,7 @@ source venv/bin/activate
 
 ---
 
-## Install Dependencies
+## 4. Install dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -232,7 +264,7 @@ pip install -r requirements.txt
 
 ---
 
-## Apply Migrations
+## 5. Run migrations
 
 ```bash
 python manage.py migrate
@@ -240,103 +272,135 @@ python manage.py migrate
 
 ---
 
-## Create Superuser
-
-```bash
-python manage.py createsuperuser
-```
-
----
-
-## Run Server
+## 6. Start backend server
 
 ```bash
 python manage.py runserver
 ```
 
----
-
-# Authentication
-
-This project uses JWT authentication.
-
-After login:
-
-1. Copy the returned access token
-2. Add it to request headers:
+Backend runs on:
 
 ```plaintext
-Authorization: Bearer <your_access_token>
+http://127.0.0.1:8000
 ```
 
 ---
 
-# Testing
+# Frontend Setup
 
-The API was manually tested using Postman for:
+## 1. Navigate to frontend directory
 
-* Authentication
-* Organization access isolation
-* Role permissions
-* Membership restrictions
-* Task validation
-* Field-level authorization
-* Cross-organization protection
+```bash
+cd frontend
+```
 
 ---
 
-# Postman Collection
+## 2. Install dependencies
 
-A complete Postman collection is included in the repository:
-
-```plaintext
-postman_collection.json
+```bash
+npm install
 ```
-
-The collection contains:
-
-* Authentication endpoints
-* Organization endpoints
-* Membership endpoints
-* Task endpoints
-
-Import into Postman to test the API locally.
 
 ---
 
-# Screenshots
+## 3. Start development server
 
-Project screenshots are available in:
-
-```plaintext
-screenshots/
+```bash
+npm run dev
 ```
 
-Includes:
+Frontend runs on:
 
-* Django admin panels
-* Postman authentication tests
-* Permission validation examples
+```plaintext
+http://localhost:3000
+```
+
+---
+
+# Production Build
+
+## Frontend
+
+```bash
+npm run build
+```
+
+---
+
+# API Overview
+
+## Authentication
+
+- Register
+- Login
+- Refresh Token
+
+---
+
+## Organizations
+
+- Get organizations
+- Create organization
+- Update organization
+- Delete organization
+
+---
+
+## Memberships
+
+- Get organization memberships
+- Add member
+- Update member role
+- Remove member
+
+---
+
+## Tasks
+
+- Get organization tasks
+- Create task
+- Update task
+- Delete task
+
+---
+
+# Deployment
+
+## Frontend
+
+Recommended deployment:
+
+- Vercel
+
+---
+
+## Backend
+
+Recommended deployment:
+
+- Render
+- Railway
 
 ---
 
 # Future Improvements
 
-Potential future enhancements:
-
-* Docker support
-* Pagination
-* Search/filter APIs
-* Activity logs
-* Task comments
-* Due dates
-* Notifications
-* Deployment
-* Automated testing
+- Email invitations
+- Task comments
+- File attachments
+- Activity logs
+- Search and filtering
+- Pagination
+- Dark mode
+- Real-time notifications
 
 ---
 
 # Author
 
-Essam Eldin Ali
+Developed by Essam Eldin Ali
+
+- GitHub: https://github.com/3ssam-ali-98
+- LinkedIn: https://linkedin.com/in/essam-eldin-ali
 

@@ -100,7 +100,7 @@ export default function HomePage() {
 
                 <Button asChild size="lg">
 
-                  <Link href="/register">
+                  <Link href="/signup">
 
                     Get Started
                     <ArrowRight className="ml-2 size-4" />

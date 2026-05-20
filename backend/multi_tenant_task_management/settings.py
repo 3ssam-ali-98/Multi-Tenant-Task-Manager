@@ -62,11 +62,11 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://mttm-nu.vercel.app/",
+    "https://mttm-nu.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://mttm-nu.vercel.app/",
+    "https://mttm-nu.vercel.app",
 ]
 
 

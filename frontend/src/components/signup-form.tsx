@@ -18,6 +18,10 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useState } from "react"
+import { useRouter } from 'next/navigation'
+import { signupUser } from "@/services/authService"
+import { toast } from "sonner";
+
 
 export function SignupForm({
 
@@ -34,6 +38,10 @@ export function SignupForm({
       email: "",
       password: "",
     })
+
+
+    const [error, setError] = useState("")
+    const router = useRouter()
   
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
       setFormData({
@@ -42,9 +50,21 @@ export function SignupForm({
       })
     }
 
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e: React.SubmitEvent<HTMLFormElement>) => {
   e.preventDefault();
-  console.log(formData);
+
+   try {
+      setError("")
+      await signupUser(formData.full_name, formData.email, formData.password);
+
+      toast.success("Account created successfully", { position: "top-center", style: { background: "green", color: "white" }, duration: 2000 });
+      setTimeout(() => {router.push("/login");}, 1000);  
+      
+    } catch (error) {
+      if (error instanceof Error) {
+      setError(error.message)  }
+    }
+    
   };
 
   return (
@@ -85,6 +105,11 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
               <Field>
+                {error && (
+                  <p className="text-red-500 text-sm">
+                    {error}
+                  </p>
+                )}
                 <Button type="submit">Create Account</Button>
                 <FieldDescription className="text-center">
                   Already have an account? <Link href="/login">Sign in</Link>

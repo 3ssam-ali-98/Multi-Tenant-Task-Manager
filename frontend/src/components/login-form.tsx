@@ -52,7 +52,6 @@ export function LoginForm({
     setLoading(true)
     const data = await loginUser(formData.email, formData.password);
 
-    console.log(data);
     login(data.access, data.refresh);
     router.push('/dashboard')
 

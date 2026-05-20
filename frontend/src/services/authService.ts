@@ -32,3 +32,19 @@ export async function refreshAccessToken(
 
   return response.data;
 }
+
+export async function signupUser(full_name: string, email: string, password: string) {
+  
+  try {
+
+  const response = await api.post("/register/", {full_name, email, password,} );
+
+  return response.data
+
+} catch (error) {
+
+  throw new Error(
+    extractErrorMessage(error)
+  );
+}
+}

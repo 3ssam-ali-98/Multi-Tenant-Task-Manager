@@ -11,7 +11,7 @@ class Task(models.Model):
         ('done', 'Done'),
     ]
     
-    title = models.CharField(max_length=20, blank=False, null=False)
+    title = models.CharField(max_length=50, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=15, choices=status_choices, default='todo')
     organization = models.ForeignKey(Organization, related_name='tasks', on_delete=models.CASCADE)

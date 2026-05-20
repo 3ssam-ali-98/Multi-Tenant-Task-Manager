@@ -7,8 +7,74 @@ The application supports organization-based collaboration with role-aware permis
 
 # Live Demo
 
-> Frontend: Coming Soon  
-> Backend API: Coming Soon
+## Frontend
+
+https://mttm-nu.vercel.app
+
+---
+
+## Backend API
+
+https://multi-tenant-task-manager-b6nd.onrender.com
+
+---
+
+# Demo Credentials
+
+## Owner Account
+
+Email: david@example.com  
+Password: david123
+
+Capabilities:
+
+- Create organizations
+- Manage memberships
+- Create, edit, and delete tasks
+- Manage organization settings
+
+---
+
+## Member Account
+
+Email: emily@example.com  
+Password: emily123
+
+Capabilities:
+
+- View assigned organizations
+- View memberships and tasks
+- Limited role-based permissions
+- Cannot manage organization settings
+
+---
+
+# Demo Data
+
+The application includes realistic demo data for testing:
+
+## Organizations
+
+- Acme Inc
+- Atlas Systems
+
+---
+
+## Demo Users
+
+- David Wilson
+- Michael Chen
+- Emily Carter
+- Sarah Johnson
+
+---
+
+## Demo Tasks
+
+- Implement JWT Refresh Flow
+- Design Responsive Sidebar
+- Fix Membership Permission Logic
+- Deploy Frontend to Vercel
 
 ---
 
@@ -113,8 +179,30 @@ The application supports organization-based collaboration with role-aware permis
 - Django
 - Django REST Framework
 - JWT Authentication
-- PostgreSQL / SQLite
+- PostgreSQL
 - Custom permission classes
+- WhiteNoise
+- Gunicorn
+
+---
+
+# Deployment Architecture
+
+## Frontend
+
+- Vercel
+
+---
+
+## Backend
+
+- Render
+
+---
+
+## Database
+
+- Neon PostgreSQL
 
 ---
 
@@ -198,7 +286,7 @@ frontend/.env.local
 Example:
 
 ```env
-NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api
+NEXT_PUBLIC_API_URL=https://multi-tenant-task-manager-b6nd.onrender.com/api
 ```
 
 ---
@@ -215,7 +303,8 @@ Example:
 
 ```env
 SECRET_KEY=your_secret_key_here
-DEBUG=True
+DEBUG=False
+DATABASE_URL=your_database_url_here
 ```
 
 ---

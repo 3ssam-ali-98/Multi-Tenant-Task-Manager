@@ -39,7 +39,7 @@ export function SignupForm({
       password: "",
     })
 
-
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const router = useRouter()
   
@@ -55,16 +55,20 @@ export function SignupForm({
 
    try {
       setError("")
+      setLoading(true)
+
       await signupUser(formData.full_name, formData.email, formData.password);
 
       toast.success("Account created successfully", { position: "top-center", style: { background: "green", color: "white" }, duration: 2000 });
       setTimeout(() => {router.push("/login");}, 1000);  
-      
+
     } catch (error) {
       if (error instanceof Error) {
       setError(error.message)  }
     }
-    
+    finally {
+    setLoading(false)
+    }
   };
 
   return (
@@ -111,6 +115,9 @@ export function SignupForm({
                   </p>
                 )}
                 <Button type="submit">Create Account</Button>
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Creating..." : "Create Account"}
+                </Button>
                 <FieldDescription className="text-center">
                   Already have an account? <Link href="/login">Sign in</Link>
                 </FieldDescription>

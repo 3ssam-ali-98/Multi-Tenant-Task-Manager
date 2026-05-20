@@ -62,10 +62,13 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://mttm-nu.vercel.app/",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://mttm-nu.vercel.app/",
+]
+
 
 
 ROOT_URLCONF = 'multi_tenant_task_management.urls'
